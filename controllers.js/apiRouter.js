@@ -9,9 +9,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const insertId = await burgersModel.create(req.body);
+  const dbResponse = await burgersModel.create(req.body);
+  const burgerId = dbResponse.insertId;
+  res.json(burgerId);
+});
 
-  res.json(insertId);
+router.put("/:id", async (req, res) => {
+  await burgersModel.update(req.params.id);
+
+  const response = {id: req.params.id};
+  res.json(response);
 });
 
 module.exports = router;

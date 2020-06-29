@@ -2,7 +2,11 @@ const orm = require("../config/orm");
 
 const burgersModel = {
   getAll: function() {
-    return orm.getAll("burgers");
+    try {
+      return orm.getAll("burgers");
+    } catch(err) {
+      console.error("Error in burgerModel.getAll:", err);
+    }
   },
 
   create: function(data) {
@@ -17,8 +21,10 @@ const burgersModel = {
     return orm.create("burgers", data);
   },
 
-  update: function() {
+  update: function(id) {
+    const data = {devoured: true};
 
+    return orm.update("burgers", data, id);
   }
 };
 
